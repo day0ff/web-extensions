@@ -1,0 +1,34 @@
+{
+  "manifest_version": 2,
+  "name": "Instagram mobile view.",
+  "description": "It makes instagram web page look like a mobile one and extends its functionality to a mobile one.",
+  "version": "0.1.0",
+  "icons": {
+    "48": "icons/icon-48-active.png"
+  },
+  "background": {
+    "page": "background/background.html"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://*.instagram.com/"
+      ],
+      "js": [
+        "content/content.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-48-active.png",
+    "default_title": "Instagram mobile view."
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.instagram.com/"
+  ]
+}
