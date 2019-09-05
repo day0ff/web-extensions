@@ -1,4 +1,4 @@
-class BrowserApiWrapper {
+export class BrowserApiWrapper {
     get isFirefox() {
         return window.hasOwnProperty('browser');
     }
@@ -14,5 +14,3 @@ class BrowserApiWrapper {
         return browser;
     }
 }
-
-export const browser = new BrowserApiWrapper().browser;

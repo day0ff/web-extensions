@@ -1,5 +1,8 @@
-chrome.storage.local.get('isMobile', (data) => {
-    console.log(data.isMobile);
+import { BrowserApiWrapper } from '../api/browser-api-wrapper.js';
+
+const browser = new BrowserApiWrapper().browser;
+
+browser.storage.local.get('isMobile', (data) => {
     if (data && data.isMobile) {
         const script = document.createElement('script');
 
@@ -8,7 +11,6 @@ navigator.__defineGetter__("userAgent", function () {return "Mozilla/5.0 (iPhone
 })()`;
 
         document.documentElement.appendChild(script);
-
         document.onload = () => script.remove();
     }
 });
