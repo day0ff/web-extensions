@@ -1,0 +1,74 @@
+#winner-generator {
+    border: solid 1px #efefef;
+    margin: 0;
+    padding: 20px;
+    background-color: white;
+}
+
+#winner-generator p {
+    line-height: 48px;
+    font-size: 28px;
+    font-weight: bold;
+    height: 48px;
+    overflow: hidden;
+}
+
+#winner-generator img {
+    padding: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 0;
+    float: none;
+}
+
+#winner-generator img.picture {
+    border-radius: 24px;
+    margin-left: 12px;
+}
+
+#winner-generator span {
+    display: inline-block;
+    text-align: left;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 0 0 0 12px;
+}
+
+#winner-generator span.comment {
+    display: inline;
+    font-size: 18px;
+    white-space: normal;
+    line-height: 48px;
+    vertical-align: top;
+    font-weight: normal;
+}
+
+#winner-generator q {
+    quotes: "\00ab" "\00bb";
+}
+
+#winner-generator span a {
+    text-decoration: underline;
+    font-style: initial;
+}
+
+#winner-generator button {
+    margin: 6px 0 6px 12px;
+    width: 155px;
+    border: solid 2px #ef1218;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #ef1218;
+    background-color: white;
+    height: 35px;
+    float: right;
+    transition: color 0.4s, border-color 0.4s, background-color 0.4s;
+}
+
+#winner-generator button:hover {
+    cursor: pointer;
+    color: white;
+    border-color: #ef1218;
+    background-color: #ef1218;
+}

@@ -1,0 +1,177 @@
+body {
+    width: 300px;
+    padding: 8px;
+}
+
+section {
+    padding-bottom: 8px;
+}
+
+p {
+    font-size: 14px;
+    text-align: justify;
+}
+
+img {
+    float: left;
+    padding: 0;
+}
+
+p img {
+    padding-right: 8px;
+}
+
+hr {
+    color: #ef1218;
+}
+
+span {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+button {
+    width: 145px;
+    border: solid 2px #ef1218;
+    border-radius: 5px;
+    font-size: 18px;
+    display: none;
+    transition: color 0.4s, border-color 0.4s, background-color 0.4s;
+}
+
+span, button {
+    color: #ef1218;
+    background-color: white;
+    height: 35px;
+}
+
+#menu {
+    width: 35px;
+    height: 35px;
+    padding: 3px;
+}
+
+#menu, #start, #get-winner, #cancel {
+    float: right;
+}
+
+#cancel, #menu {
+    margin-left: 8px;
+}
+
+button:hover, #menu:hover {
+    cursor: pointer;
+    color: white;
+    border-color: #ef1218;
+    background-color: #ef1218;
+}
+
+#controls {
+    height: 35px;
+}
+
+#menu-container {
+    display: none;
+}
+
+/*p {*/
+/*margin-left: 4em;*/
+/*float: none;*/
+/*font-size: 1.2em;*/
+/*text-align: justify;*/
+/*vertical-align: middle;*/
+/*padding: 0.2em;*/
+/*}*/
+
+/*div {*/
+/*clear: both;*/
+/*}*/
+
+/*div img {*/
+/*float: left;*/
+/*}*/
+
+/*button, #menu {*/
+/*border: solid 2px #ef40a3;*/
+/*border-radius: 5px;*/
+/*color: #ef40a3;*/
+/*}*/
+
+/*button:hover, #menu:hover {*/
+/*cursor: pointer;*/
+/*color: #954070;*/
+/*border-color: #954070;*/
+/*}*/
+
+/*button {*/
+/*font-size: 1.2em;*/
+/*background-color: white;*/
+/*width: 145px;*/
+/*height: 35px;*/
+/*margin-bottom: 0.5em;*/
+/*}*/
+
+/*#menu {*/
+/*float: right;*/
+/*width: 35px;*/
+/*height: 35px;*/
+/*padding: 3px;*/
+/*}*/
+
+/*hr {*/
+/*color: #ef40a3;*/
+/*}*/
+
+/*#counter {*/
+/*font-size: 1.4em;*/
+/*border: 0px;*/
+/*width: 200px;*/
+/*text-align: left;*/
+/*}*/
+
+/*#counter:hover {*/
+/*cursor: default;*/
+/*color: #ef40a3;*/
+/*}*/
+
+/*#getWiner {*/
+/*float: right;*/
+/*}*/
+
+/*#winner font {*/
+/*color: #ef40a3;*/
+/*}*/
+
+/*#winner b {*/
+/*color: #954070;*/
+/*}*/
+
+/*#list {*/
+/*margin-top: 0.5em;*/
+/*}*/
+
+/*ol {*/
+/*list-style: none;*/
+/*counter-reset: li*/
+/*}*/
+
+/*li::before {*/
+/*content: counter(li);*/
+/*color: #ef40a3;*/
+/*display: inline-block;*/
+/*width: 1em;*/
+/*margin-left: -2em;*/
+/*float: left;*/
+/*}*/
+
+/*li {*/
+/*counter-increment: li*/
+/*}*/
+
+/*li font {*/
+/*color: #ef40a3;*/
+/*}*/
+
+/*li b {*/
+/*color: #954070;*/
+/*}*/
