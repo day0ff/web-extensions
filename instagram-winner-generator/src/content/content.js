@@ -5,7 +5,8 @@ const browser = new BrowserApiWrapper().browser;
 const STAGE = {
     initial: initialStage,
     drawing: drawingStage,
-    'get-winner': getWinner
+    'get-winner': getWinner,
+    complete: completeStage
 };
 
 browser.storage.local.get('iwg', data => {
@@ -21,7 +22,7 @@ browser.storage.onChanged.addListener((changes) => {
 
 function initialStage() {
     const section = document.querySelector('#winner-generator');
-    section.remove();
+    section && section.remove();
 }
 
 function drawingStage() {
@@ -96,7 +97,6 @@ async function getWinner() {
     });
     const commentsMap = new Map(comments);
     const shuffleArray = shuffle(Array.from(commentsMap));
-    // const shuffleArray = Array.from(commentsMap);
 
     console.log(shuffleArray);
 
@@ -106,7 +106,6 @@ async function getWinner() {
     winnerElement.innerHTML = 'Winner is: ';
 
     const winner = getWinnerFromArray(shuffleArray);
-    // const winner = shuffleArray[shuffleArray.length - 1];
     const span = document.createElement('span');
 
     winner[1].img.classList.add('picture');
@@ -120,16 +119,44 @@ async function getWinner() {
     browser.storage.local.set({iwg: {stage: 'complete'}});
 }
 
+function completeStage() {
+    console.log('Complete!');
+}
+
 async function loadMoreComments(count) {
     console.log('loadMoreComments', count);
     const moreComments = document.querySelector('span[aria-label="Load more comments"]');
     if (moreComments) {
         moreComments.click();
-        await new Promise((resolve) => setTimeout(() => resolve(), 400));
-        loadMoreComments(++count);
+        await new Promise((resolve) => {
+            let hasChanged = false;
+            const timeout = setTimeout(() => {
+                console.log('timeout', hasChanged);
+                if (!hasChanged) resolve();
+            }, 5000);
+            const notePad = document.querySelector('article div div ul');
+            const config = {
+                attributes: true,
+                characterData: true,
+                childList: true,
+                subtree: true
+            };
+            const observer = new MutationObserver(
+                (mutationsList) => {
+                    const mutationsLength = mutationsList.length;
+                    console.log('Mutation length', mutationsLength);
+                    hasChanged = true;
+                    clearTimeout(timeout);
+                    observer.disconnect();
+                    resolve();
+                }
+            );
+            observer.observe(notePad, config);
+        });
+        return loadMoreComments(++count);
     } else {
         console.log('loadMoreComments', 'DONE');
-        return Promise.resolve();
+        return Promise.resolve(count);
     }
 }
 

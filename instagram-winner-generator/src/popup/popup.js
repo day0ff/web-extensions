@@ -5,7 +5,7 @@ const browser = new BrowserApiWrapper().browser;
 const STAGE = {
     initial: initialStage,
     drawing: drawingStage,
-    'get-winner': initialStage,
+    'get-winner': drawingStage,
     complete: initialStage,
 };
 
