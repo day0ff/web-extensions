@@ -1,5 +1,14 @@
 import { BrowserApiWrapper } from '../api/browser-api-wrapper.js';
 
+const DIALOG_MODAL_WINDOW_SELECTOR = 'div[role="dialog"]';
+const MAIN_SELECTOR = 'main div';
+const COMMENTS_CONTAINER_SELECTOR = 'article div div ul';
+const COMMENTS_SELECTOR = 'article div div ul ul li[role="menuitem"]';
+const LOAD_MORE_COMMENTS_SELECTOR = 'span[aria-label="Load more comments"]';
+
+const WINNER_GENERATOR_SECTION_SELECTOR = '#winner-generator';
+const WINNER_GENERATOR_CONTAINER_SELECTOR = '#winner-generator p';
+
 const browser = new BrowserApiWrapper().browser;
 
 const STAGE = {
@@ -21,19 +30,21 @@ browser.storage.onChanged.addListener((changes) => {
 });
 
 function initialStage() {
-    const section = document.querySelector('#winner-generator');
+    const section = document.querySelector(WINNER_GENERATOR_SECTION_SELECTOR);
     section && section.remove();
 }
 
 function drawingStage() {
-    const dialog = !!document.querySelector('div[role="dialog"]');
+    initialStage();
+
+    const dialog = !!document.querySelector(DIALOG_MODAL_WINDOW_SELECTOR);
 
     if (dialog) {
         document.location.reload(true);
         return;
     }
 
-    const main = document.querySelector('main div');
+    const main = document.querySelector(MAIN_SELECTOR);
     const section = document.createElement('section');
 
     const marginSides = window.getComputedStyle(main.firstChild).getPropertyValue('margin-left');
@@ -51,6 +62,8 @@ function drawingStage() {
     img.title = 'GIFT';
     img.width = 48;
     img.height = 48;
+
+    const buttonWrapper = document.createElement('div');
 
     const getWinnerButton = document.createElement('button');
 
@@ -70,8 +83,9 @@ function drawingStage() {
 
     p.appendChild(img);
     p.appendChild(span);
-    p.appendChild(cancelButton);
-    p.appendChild(getWinnerButton);
+    buttonWrapper.appendChild(cancelButton);
+    buttonWrapper.appendChild(getWinnerButton);
+    p.appendChild(buttonWrapper);
     section.id = 'winner-generator';
     section.appendChild(p);
     main.insertBefore(section, main.firstChild);
@@ -84,24 +98,22 @@ async function getWinner() {
     buttonGetWinner && buttonGetWinner.remove();
     buttonCancel && buttonCancel.remove();
 
+    const container = document.querySelector(WINNER_GENERATOR_CONTAINER_SELECTOR);
+    const winnerElement = container.querySelector('span');
+
+    winnerElement.innerHTML = 'Pending...';
+
     await loadMoreComments(0);
 
-    console.log('AFTER');
-
-    const notes = Array.from(document.querySelectorAll('article div div ul ul li[role="menuitem"]'));
+    const notes = Array.from(document.querySelectorAll(COMMENTS_SELECTOR));
     const comments = notes.map(note => {
         const name = note.querySelector('h3 a');
         const img = note.querySelector('img');
         const comment = note.querySelector('span');
-        return [name.href, {name, img, comment}];
+        return [name && name.href, {name, img, comment}];
     });
     const commentsMap = new Map(comments);
     const shuffleArray = shuffle(Array.from(commentsMap));
-
-    console.log(shuffleArray);
-
-    const container = document.querySelector('#winner-generator p');
-    const winnerElement = container.querySelector('span');
 
     winnerElement.innerHTML = 'Winner is: ';
 
@@ -120,32 +132,24 @@ async function getWinner() {
 }
 
 function completeStage() {
-    console.log('Complete!');
+
 }
 
 async function loadMoreComments(count) {
-    console.log('loadMoreComments', count);
-    const moreComments = document.querySelector('span[aria-label="Load more comments"]');
+    const moreComments = document.querySelector(LOAD_MORE_COMMENTS_SELECTOR);
     if (moreComments) {
+        const notePad = document.querySelector(COMMENTS_CONTAINER_SELECTOR);
+        const config = {
+            attributes: true,
+            characterData: true,
+            childList: true,
+            subtree: true
+        };
         moreComments.click();
         await new Promise((resolve) => {
-            let hasChanged = false;
-            const timeout = setTimeout(() => {
-                console.log('timeout', hasChanged);
-                if (!hasChanged) resolve();
-            }, 5000);
-            const notePad = document.querySelector('article div div ul');
-            const config = {
-                attributes: true,
-                characterData: true,
-                childList: true,
-                subtree: true
-            };
+            const timeout = setTimeout(() => resolve(), 1000);
             const observer = new MutationObserver(
-                (mutationsList) => {
-                    const mutationsLength = mutationsList.length;
-                    console.log('Mutation length', mutationsLength);
-                    hasChanged = true;
+                () => {
                     clearTimeout(timeout);
                     observer.disconnect();
                     resolve();
@@ -155,7 +159,6 @@ async function loadMoreComments(count) {
         });
         return loadMoreComments(++count);
     } else {
-        console.log('loadMoreComments', 'DONE');
         return Promise.resolve(count);
     }
 }

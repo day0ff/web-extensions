@@ -6,14 +6,16 @@
 }
 
 #winner-generator p {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     line-height: 48px;
     font-size: 28px;
     font-weight: bold;
-    height: 48px;
-    overflow: hidden;
+    align-items: center;
 }
 
-#winner-generator img {
+#winner-generator p img {
     padding: 0;
     width: 48px;
     height: 48px;
@@ -27,19 +29,14 @@
 }
 
 #winner-generator span {
-    display: inline-block;
-    text-align: left;
-    text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
     padding: 0 0 0 12px;
 }
 
 #winner-generator span.comment {
-    display: inline;
     font-size: 18px;
+    line-height: 18px;
     white-space: normal;
-    line-height: 48px;
     vertical-align: top;
     font-weight: normal;
 }
@@ -51,6 +48,11 @@
 #winner-generator span a {
     text-decoration: underline;
     font-style: initial;
+}
+#winner-generator p div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 #winner-generator button {
