@@ -14,9 +14,9 @@
   },
   "content_scripts": [
     {
-      "run_at": "document_start",
+      "run_at": "document_end",
       "matches": [
-        "*://helpdesk.senlainc.com/"
+        "*://helpdesk.senlainc.com/*"
       ],
       "js": [
         "content/content.js"
@@ -30,6 +30,6 @@
   "permissions": [
     "tabs",
     "activeTab",
-    "*://helpdesk.senlainc.com/"
+    "*://helpdesk.senlainc.com/*"
   ]
 }
