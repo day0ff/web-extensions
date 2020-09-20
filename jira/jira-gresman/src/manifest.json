@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "Jira Gresman.",
+  "description": "It helps to logg time in jira.",
+  "version": "1.0.0",
+  "icons": {
+    "48": "icons/icon-48.png"
+  },
+  "background": {
+    "scripts": [
+      "background/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "*://helpdesk.senlainc.com/*"
+      ],
+      "js": [
+        "content/content.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-48.png",
+    "default_title": "Jira Gresman."
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "*://helpdesk.senlainc.com/*"
+  ]
+}
