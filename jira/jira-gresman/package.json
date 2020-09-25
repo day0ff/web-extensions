@@ -8,7 +8,9 @@
     "prod": "webpack --mode production --config webpack.prod.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {},
+  "dependencies": {
+    "js-base64": "^3.5.2"
+  },
   "devDependencies": {
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.5",
