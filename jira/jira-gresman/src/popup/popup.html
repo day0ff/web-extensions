@@ -16,9 +16,11 @@
     <input name="storage" type="button" value="Storage"/>
 </section>
 <section id="init" class="tab">
-    <p><b>Jira Gresman</b> extension helps to log work time.</p>
+    <p><b>Jira Gresman</b> extension<br/>helps to log work time.</p>
     <p>To be able to use it, please, go through two simple stages of authorization.</p>
-    <a href="#" name="start" class="bottom">Start</a>
+    <div class="bottom">
+        <a href="#" name="start">Start</a>
+    </div>
 </section>
 <section id="basic" class="tab">
     <p><b>Step 1</b></p>
@@ -26,10 +28,25 @@
     <form name="basic">
         <input name="login" type="text" placeholder="login"/>
         <input name="password" type="password" placeholder="password"/>
-        <p class="error"> </p>
-        <p class="info"> </p>
     </form>
-    <a href="#" name="submit" class="bottom">Submit</a>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="submit">Submit</a>
+    </div>
+</section>
+<section id="step1" class="tab">
+    <p><b>Step 1</b></p>
+    <p class="confirmed">Basic Auth credentials confirmed.</p>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="next">Next</a>
+    </div>
 </section>
 <section id="secure" class="tab">
     <p><b>Step 2</b></p>
@@ -37,37 +54,45 @@
     <form name="secure">
         <input name="login" type="text" placeholder="login"/>
         <input name="password" type="password" placeholder="password"/>
-        <p class="error"> </p>
-        <p class="info"> </p>
     </form>
-    <a href="#" name="submit" class="bottom">Submit</a>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="submit">Submit</a>
+    </div>
 </section>
-<section id="issues" class="tab">
-    <p>Jira user issues.</p>
-    <form name="issues">
-        <ul id="issues-list">
-            <li>Empty</li>
-        </ul>
-        <p class="error"> </p>
-        <p class="info"> </p>
-        <input name="get" type="button" value="Get Issues" />
-        <input name="save" type="button" value="Save Issue for Log" />
-    </form>
+<section id="step2" class="tab">
+    <p><b>Step 2</b></p>
+    <p class="confirmed">Jira login credentials confirmed.</p>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="next">Next</a>
+    </div>
 </section>
 <section id="logtime" class="tab">
-    <p>Log Time.</p>
+    <h3>Log Time</h3>
     <form name="logtime">
-        <ul>
-            <li><select id="issue" name="issues"><option>Empty</option></select></li>
-            <li><textarea rows="3" id="comment" name="comment" placeholder="Description*"></textarea></li>
-            <li><label for="date">Date*</label><input type="date" id="date" name="date" value=""></li>
-            <li><label for="worked">Worked*</label><input type="text" id="worked" name="worked" value=""></li>
-            <li><label for="billable">Billable</label><input type="number" id="billable" name="billable" value=""></li>
-            <li><p class="error"> </p></li>
-            <li><p class="info"> </p></li>
-            <li><input name="log" type="button" value="Log Time" /><input name="cancel" type="button" value="Cancel" /></li>
-        </ul>
+        <select id="issue" name="issues">
+            <option>Empty</option>
+        </select>
+        <textarea rows="3" id="comment" name="comment" placeholder="Description*"></textarea>
+        <input type="date" id="date" name="date">
+        <input type="text" id="worked" name="worked" placeholder="worked time: h m">
+        <input type="number" id="billable" name="billable"  placeholder="billable time: h m">
     </form>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="log">Log Time</a>
+        <!--<a href="#" name="cancel">Cancel</a>-->
+    </div>
 </section>
 <section id="storage" class="tab">
     <p>Extension storage actions.</p>

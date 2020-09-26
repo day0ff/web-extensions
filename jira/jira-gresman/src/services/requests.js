@@ -33,7 +33,7 @@ const secureRequest = ({basic, secure}) => {
     return fetch('https://helpdesk.senlainc.com/login.jsp', requestOptions);
 };
 
-const logRequest = ({basic}) => {
+const logRequest = ({basic, secure, logtime}) => {
     const headers = new Headers();
 
     headers.append('Authorization', `Basic ${Base64.encode(basic.login + ':' + basic.password)}`);
@@ -46,18 +46,18 @@ const logRequest = ({basic}) => {
                 _Billable_: {
                     name: 'Billable',
                     workAttributeId: 6,
-                    value: '4'
+                    value: logtime.billable
                 }
             },
             billableSeconds: '',
-            comment: 'https://jira.bpcbt.com/browse/B_SVMPL-1936',
+            comment: logtime.comment,
             endDate: null,
             includeNonWorkingDays: false,
-            originTaskId: '13240',
+            originTaskId: logtime.issue,
             remainingEstimate: null,
-            started: '2020-09-11',
-            timeSpentSeconds: 14400,
-            worker: 'dzianis_viarshadau',
+            started: logtime.date,
+            timeSpentSeconds: logtime.worked * 3600,
+            worker: secure.login,
         }),
         headers
     };

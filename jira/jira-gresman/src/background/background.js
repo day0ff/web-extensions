@@ -18,7 +18,7 @@ browser.runtime.onInstalled.addListener(() => {
                 tab: null,
                 issues: null,
                 log: null,
-                window: null,
+                temp: null,
                 stage: 'INIT',
                 status: 'DONE'
             };
@@ -77,7 +77,7 @@ browser.storage.local.onChanged.addListener((storage) => {
 
             basicRequest(basic).then(response => {
                 if (response.status === 200) {
-                    updateStorage({stage: 'SECURE', status: 'BEGIN'});
+                    updateStorage({stage: 'STEP1', status: 'END'});
                 }
                 else throw new Error();
             }).catch(() => {
@@ -85,78 +85,48 @@ browser.storage.local.onChanged.addListener((storage) => {
             })
         }
 
-    }
-});
-
-browser.runtime.onMessage.addListener(
-    (request) => {
-        if (request.popup && request.popup.message && request.popup.message === 'basic') {
-            const {basic} = request.popup;
-
-            basicRequest(basic).then(response => {
-                if (response.status === 200) {
-                    updateStorage({basic, stage: 'SECURE'}, () => console.log('Basic credential saved.'));
-                }
-                else throw new Error();
-            }).catch(() => {
-                updateStorage({stage: 'ERROR'}, () => console.log('Failed Basic credential.'));
-            })
-        }
-
-        if (request.popup && request.popup.message && request.popup.message === 'secure') {
-            const {basic, secure} = request.popup;
+        if (backgroundState.stage === 'SECURE' && backgroundState.status === 'REQUEST') {
+            const {basic, secure} = backgroundState;
 
             secureRequest({basic, secure}).then(response => {
                 if (response.status === 200) {
-                    updateStorage({secure, stage: 'ISSUES'}, () => console.log('Secure credential saved.'));
+                    updateStorage({status: 'LOGIN'});
                     return response.text();
                 } else throw new Error();
             }).then(() => {
-                browser.tabs.create({url: 'https://helpdesk.senlainc.com/login.jsp', active: false}, (tab) => {
-                    updateStorage({tab, stage: 'ISSUES'}, () => console.log('Tab opened.'));
-                });
+                browser.tabs.create({
+                    url: 'https://helpdesk.senlainc.com/login.jsp', active: true
+                }, (tab) => updateStorage({tab}));
             }).catch(() => {
-                updateStorage({stage: 'ERROR'}, () => console.log('Failed Secure credential.'));
+                updateStorage({status: 'ERROR'});
             })
         }
 
-        // if (request.popup && request.popup.message && request.popup.message === 'issues') {
-        //     const tabId = backgroundState.tab && backgroundState.tab.id;
-        //
-        //     browser.tabs.update(tabId, {
-        //         url: 'https://helpdesk.senlainc.com/secure/Dashboard.jspa',
-        //         active: false
-        //     }, () => {
-        //         if (browser.runtime.lastError) {
-        //             browser.tabs.create({
-        //                 url: 'https://helpdesk.senlainc.com/secure/Dashboard.jspa',
-        //                 active: false
-        //             }, (tab) => {
-        //                 updateStorage({tab, stage: 'PENDING'}, () => console.log('Get issues.'));
-        //             });
-        //         } else {
-        //             updateStorage({stage: 'PENDING'}, () => console.log('Get issues.'));
-        //         }
-        //     });
-        // }
+        if (backgroundState.stage === 'SECURE' && backgroundState.status === 'ISSUES') {
+            updateStorage({stage: 'STEP2', status:'BEGIN'});
+        }
 
-        if (request.popup && request.popup.message && request.popup.message === 'test') {
-            const basic = {
-                login: 'senla',
-                password: 'ggnore'
-            };
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'REQUEST') {
+            const {basic, secure, logtime} = backgroundState;
 
-            logRequest({basic}).then(response => {
-              if(response.status===200){
+            logRequest({basic, secure, logtime}).then(response => {
+                if (response.status === 200) {
+                    updateStorage({status: 'LOGGED', temp: null});
+                } else throw new Error();
+            }).catch(() => {
+                updateStorage({status: 'LOGGED_ERROR'});
+            })
+        }
 
-              }else{
-                  console.log('Repit Login');
-              }
-            }).catch(error=>{
-                console.log('Error');
-            });
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'ISSUES') {
+            browser.tabs.create({
+                url: 'https://helpdesk.senlainc.com/secure/Dashboard.jspa',
+                active: true
+            }, (tab) => updateStorage({tab, status: 'GET_ISSUES'}));
+        }
+
+        if (backgroundState.tab && backgroundState.tab.id && (backgroundState.status === 'BEGIN' || backgroundState.status === 'ERROR')) {
+            browser.tabs.remove(backgroundState.tab.id, () => updateStorage({tab:null}));
         }
     }
-);
-
-
+});
