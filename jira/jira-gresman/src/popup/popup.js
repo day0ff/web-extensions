@@ -5,6 +5,7 @@ const messages = {
     error: {
         empty: 'Please, fill the form.',
         request: 'Incorrect credential.',
+        issues: 'Can not get issues.',
         logged: 'Incorrect data or credential.'
     },
     info: {
@@ -42,8 +43,12 @@ const step2Next = step2Section.querySelector('a[name="next"]');
 const logtimeSection = document.querySelector('#logtime');
 const logtimeForm = document.forms.logtime;
 const issueSelect = logtimeForm.issues;
+const refreshSubmit = logtimeSection.querySelector('a[name="refresh"]');
 const logSubmit = logtimeSection.querySelector('a[name="log"]');
-const cancelSubmit = logtimeSection.querySelector('a[name="cancel"]');
+const tempoSubmit = logtimeSection.querySelector('a[name="tempo"]');
+const dashboardSubmit = logtimeSection.querySelector('a[name="dashboard"]');
+const searchSubmit = logtimeSection.querySelector('a[name="search"]');
+const logoutSubmit = logtimeSection.querySelector('a[name="logout"]');
 
 const storageSection = document.querySelector('#storage');
 const getButton = document.getElementById('get');
@@ -114,24 +119,6 @@ step2Next.addEventListener('click', () => {
     updateStorage({stage:'LOGTIME', status: 'BEGIN'});
 });
 
-/*
-
-issuesGet.addEventListener('click', () => {
-    browser.runtime.sendMessage({popup: {message: 'issues'}});
-});
-
-issuesSave.addEventListener('click', () => {
-    const issueName = issuesForm.issue && issuesForm.issue.value;
-
-    if (issueName) {
-        const issues = popupState.issues.map(issue => issue.name === issueName ? {...issue, checked: true} : {...issue, checked: false});
-
-        updateStorage({issues, stage: 'LOGTIME'}, () => console.log('Log issue saved.'));
-    }
-});
-
-*/
-
 logtimeForm.addEventListener('change', ()=>{
     const temp = {
         logtime: {
@@ -144,6 +131,10 @@ logtimeForm.addEventListener('change', ()=>{
     };
 
     updateStorage({temp});
+});
+
+refreshSubmit.addEventListener('click', () => {
+    updateStorage({status: 'REFRESH'});
 });
 
 logSubmit.addEventListener('click', () => {
@@ -159,6 +150,36 @@ logSubmit.addEventListener('click', () => {
         updateStorage({logtime, status: 'REQUEST'});
     } else{
         showError('logtime', messages.error.empty);
+    }
+});
+
+tempoSubmit.addEventListener('click', () => {
+    updateStorage({status: 'TEMPO'});
+});
+
+dashboardSubmit.addEventListener('click', () => {
+    updateStorage({status: 'DASHBOARD'});
+});
+
+searchSubmit.addEventListener('click', () => {
+    updateStorage({status: 'SEARCH'});
+});
+
+logoutSubmit.addEventListener('click', () => {
+    if(confirm('Logout from extension?')){
+        const state = {
+            basic: null,
+            secure: null,
+            tab: null,
+            issues: null,
+            log: null,
+            logtime: null,
+            temp: null,
+            stage: 'INIT',
+            status: 'DONE'
+        };
+
+        updateStorage(state);
     }
 });
 
@@ -179,7 +200,6 @@ testButton.addEventListener('click', () => {
     updateStorage({status: 'ISSUES'});
 });
 
-
 browser.storage.local.get('gresman', ({gresman}) => {
     popupState = gresman;
     console.log(popupState);
@@ -190,6 +210,7 @@ browser.storage.local.get('gresman', ({gresman}) => {
             tab: null,
             issues: null,
             log: null,
+            logtime: null,
             temp: null,
             stage: 'INIT',
             status: 'DONE'
@@ -239,11 +260,14 @@ browser.storage.local.get('gresman', ({gresman}) => {
     setLogTime(popupState);
 });
 
-browser.storage.local.onChanged.addListener((storage) => {
+browser.storage.onChanged.addListener((storage) => {
     if (storage.gresman && storage.gresman.newValue) {
         popupState = storage.gresman.newValue;
         console.log(popupState);
         switch (popupState.stage) {
+            case 'INIT':
+                showSection('init');
+                break;
             case 'BASIC':
                 showSection('basic');
                 break;
@@ -262,6 +286,10 @@ browser.storage.local.onChanged.addListener((storage) => {
         }
         switch (popupState.status) {
             case 'ERROR':
+                showInfo(popupState.stage.toLowerCase(), ' ');
+                showError(popupState.stage.toLowerCase(), messages.error.request);
+                break;
+            case 'ERROR_ISSUES':
                 showInfo(popupState.stage.toLowerCase(), ' ');
                 showError(popupState.stage.toLowerCase(), messages.error.request);
                 break;

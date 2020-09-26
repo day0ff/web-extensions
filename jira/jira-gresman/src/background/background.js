@@ -18,6 +18,7 @@ browser.runtime.onInstalled.addListener(() => {
                 tab: null,
                 issues: null,
                 log: null,
+                logtime: null,
                 temp: null,
                 stage: 'INIT',
                 status: 'DONE'
@@ -43,31 +44,7 @@ browser.webRequest.onAuthRequired.addListener((details, callback) => {
     ['asyncBlocking']
 );
 
-/* TODO detect open/close window */
-/*
-browser.windows.onCreated.addListener((windowid)=>{
-    console.log("window open", windowid);
-    // updateStorage({stage: 'ERROR'}, () => console.log('Failed Basic credential.'));
-});
-
-browser.windows.onRemoved.addListener((windowId) => {
-    console.log("window closed", windowId);
-    // updateStorage({window: {id: windowId}}, () => console.log('Failed Basic credential.'));
-});
-*/
-
-/* TODO detect switch tab and replace icon */
-/*
-browser.tabs.onActivated.addListener(({tabId, windowId}) => {
-    browser.tabs.query({active: true, windowId}, ([tab]) => {
-        const path = /helpdesk.senlainc.com/g.test(tab.url) ? '../icons/icon-48-active.png' : '../icons/icon-48.png';
-
-        browser.browserAction.setIcon({path});
-    });
-});
-*/
-
-browser.storage.local.onChanged.addListener((storage) => {
+browser.storage.onChanged.addListener((storage) => {
     if (storage.gresman && storage.gresman.newValue) {
         backgroundState = storage.gresman.newValue;
         console.log(backgroundState);
@@ -102,7 +79,7 @@ browser.storage.local.onChanged.addListener((storage) => {
             })
         }
 
-        if (backgroundState.stage === 'SECURE' && backgroundState.status === 'ISSUES') {
+        if (backgroundState.stage === 'SECURE' && (backgroundState.status === 'ISSUES' || backgroundState.status === 'ERROR_ISSUES')) {
             updateStorage({stage: 'STEP2', status:'BEGIN'});
         }
 
@@ -118,11 +95,36 @@ browser.storage.local.onChanged.addListener((storage) => {
             })
         }
 
-        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'ISSUES') {
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'REFRESH') {
             browser.tabs.create({
                 url: 'https://helpdesk.senlainc.com/secure/Dashboard.jspa',
                 active: true
-            }, (tab) => updateStorage({tab, status: 'GET_ISSUES'}));
+            }, (tab) => updateStorage({tab, status:'GET_ISSUES'}));
+        }
+
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'ISSUES') {
+            updateStorage({status:'BEGIN'});
+        }
+
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'TEMPO') {
+            browser.tabs.create({
+                url: 'https://helpdesk.senlainc.com/secure/Tempo.jspa#/my-work',
+                active: true
+            }, () => updateStorage({status:'BEGIN'}));
+        }
+
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'DASHBOARD') {
+            browser.tabs.create({
+                url: 'https://helpdesk.senlainc.com/secure/Dashboard.jspa',
+                active: true
+            }, () => updateStorage({status:'BEGIN'}));
+        }
+
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'SEARCH') {
+            browser.tabs.create({
+                url: 'https://helpdesk.senlainc.com/issues/',
+                active: true
+            }, () => updateStorage({status:'BEGIN'}));
         }
 
         if (backgroundState.tab && backgroundState.tab.id && (backgroundState.status === 'BEGIN' || backgroundState.status === 'ERROR')) {

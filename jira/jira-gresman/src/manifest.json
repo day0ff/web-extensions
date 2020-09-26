@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Jira Gresman.",
   "description": "It helps to logg time in jira.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "icons": {
     "48": "icons/icon-48-active.png"
   },

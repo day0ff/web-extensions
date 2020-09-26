@@ -24,7 +24,7 @@ if (loginFormSecure) {
                     loginFormSecurePassword.value = gresman.secure && gresman.secure.password || '';
                     loginFormSecureButton.click();
 
-                    updateStorage({status: 'ISSUES'});
+                    updateStorage({status: 'GET_ISSUES'});
 
                     setTimeout(() => {
                         updateStorage({status: 'ERROR'});

@@ -25,7 +25,6 @@ h1 {
     margin: 0;
     font-size: 21px;
     color: var(--blue);
-    /*text-shadow: 0 1px 1px var(--blue-dark);*/
 }
 
 p {
@@ -58,6 +57,10 @@ input, select, textarea {
     width: 177px;
 }
 
+select {
+    width: 163px;
+}
+
 .tab {
     display: none;
 }
@@ -84,4 +87,27 @@ input, select, textarea {
 
 #menu {
     display: none;
+}
+
+.refresh:hover {
+    border-bottom: none;
+}
+
+.links {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    top: 163px;
+    right: 0;
+}
+
+.logout {
+    position: absolute;
+    top: -38px;
+    right: -7px;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: white;
 }

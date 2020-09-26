@@ -18,6 +18,10 @@
 <section id="init" class="tab">
     <p><b>Jira Gresman</b> extension<br/>helps to log work time.</p>
     <p>To be able to use it, please, go through two simple stages of authorization.</p>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
     <div class="bottom">
         <a href="#" name="start">Start</a>
     </div>
@@ -77,13 +81,16 @@
 <section id="logtime" class="tab">
     <h3>Log Time</h3>
     <form name="logtime">
-        <select id="issue" name="issues">
-            <option>Empty</option>
-        </select>
-        <textarea rows="3" id="comment" name="comment" placeholder="Description*"></textarea>
-        <input type="date" id="date" name="date">
-        <input type="text" id="worked" name="worked" placeholder="worked time: h m">
-        <input type="number" id="billable" name="billable"  placeholder="billable time: h m">
+        <div>
+            <select id="issue" name="issues">
+                <option>Empty</option>
+            </select>
+            <a href="#" name="refresh" class="refresh">⟲</a>
+        </div>
+        <textarea rows="3" name="comment" placeholder="Description*"></textarea>
+        <input type="date" name="date">
+        <input type="text" name="worked" placeholder="worked time: h m">
+        <input type="number" name="billable" placeholder="billable time: h m">
     </form>
     <div class="notification">
         <p class="error"></p>
@@ -91,8 +98,13 @@
     </div>
     <div class="bottom">
         <a href="#" name="log">Log Time</a>
-        <!--<a href="#" name="cancel">Cancel</a>-->
     </div>
+    <div class="links">
+        <a href="#" name="tempo">Tempo</a>
+        <a href="#" name="search">Issues</a>
+        <a href="#" name="dashboard">Dashboard</a>
+    </div>
+    <a href="#" name="logout" class="logout">logout</a>
 </section>
 <section id="storage" class="tab">
     <p>Extension storage actions.</p>
