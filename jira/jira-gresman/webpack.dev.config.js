@@ -20,7 +20,6 @@ module.exports = {
         new CopyWebpackPlugin([
             {from: './src/manifest.json', to: 'manifest.json'},
             {from: './src/icons', to: 'icons'},
-            {from: './src/background', to: 'background'},
             {from: './src/popup', to: 'popup'},
         ])
     ]

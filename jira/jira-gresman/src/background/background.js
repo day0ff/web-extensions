@@ -47,7 +47,6 @@ browser.webRequest.onAuthRequired.addListener((details, callback) => {
 browser.storage.onChanged.addListener((storage) => {
     if (storage.gresman && storage.gresman.newValue) {
         backgroundState = storage.gresman.newValue;
-        console.log(backgroundState);
 
         if (backgroundState.stage === 'BASIC' && backgroundState.status === 'REQUEST') {
             const {basic} = backgroundState;
@@ -93,6 +92,13 @@ browser.storage.onChanged.addListener((storage) => {
             }).catch(() => {
                 updateStorage({status: 'LOGGED_ERROR'});
             })
+        }
+
+        if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'SIGN_IN') {
+            browser.tabs.create({
+                url: 'https://helpdesk.senlainc.com/login.jsp',
+                active: true
+            }, (tab) => updateStorage({tab, status:'LOGIN'}));
         }
 
         if (backgroundState.stage === 'LOGTIME' && backgroundState.status === 'REFRESH') {

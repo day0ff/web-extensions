@@ -4,9 +4,9 @@ import { updateStorage } from '../storage/storage.js';
 const messages = {
     error: {
         empty: 'Please, fill the form.',
-        request: 'Incorrect credential.',
-        issues: 'Can not get issues.',
-        logged: 'Incorrect data or credential.'
+        request: 'Invalid credentials.',
+        issues: "Can't get issues.",
+        logged: 'Please, press login and repeat.'
     },
     info: {
         request: 'pending request...',
@@ -45,15 +45,18 @@ const logtimeForm = document.forms.logtime;
 const issueSelect = logtimeForm.issues;
 const refreshSubmit = logtimeSection.querySelector('a[name="refresh"]');
 const logSubmit = logtimeSection.querySelector('a[name="log"]');
+const loginSubmit = logtimeSection.querySelector('a[name="login"]');
 const tempoSubmit = logtimeSection.querySelector('a[name="tempo"]');
 const dashboardSubmit = logtimeSection.querySelector('a[name="dashboard"]');
 const searchSubmit = logtimeSection.querySelector('a[name="search"]');
 const logoutSubmit = logtimeSection.querySelector('a[name="logout"]');
 
-const storageSection = document.querySelector('#storage');
-const getButton = document.getElementById('get');
-const delButton = document.getElementById('del');
-const testButton = document.getElementById('test');
+const popupLogout = document.querySelector('.popup-logout');
+const yesSubmit = popupLogout.querySelector('a[name="yes"]');
+const cancelSubmit = popupLogout.querySelector('a[name="cancel"]');
+
+const popupLogged = document.querySelector('.popup-logged');
+const okSubmit = popupLogged.querySelector('a[name="ok"]');
 
 menu.addEventListener('click', ({target: {name}}) => {
     showSection(name);
@@ -153,6 +156,10 @@ logSubmit.addEventListener('click', () => {
     }
 });
 
+loginSubmit.addEventListener('click', () => {
+    updateStorage({status: 'SIGN_IN'});
+});
+
 tempoSubmit.addEventListener('click', () => {
     updateStorage({status: 'TEMPO'});
 });
@@ -166,43 +173,37 @@ searchSubmit.addEventListener('click', () => {
 });
 
 logoutSubmit.addEventListener('click', () => {
-    if(confirm('Logout from extension?')){
-        const state = {
-            basic: null,
-            secure: null,
-            tab: null,
-            issues: null,
-            log: null,
-            logtime: null,
-            temp: null,
-            stage: 'INIT',
-            status: 'DONE'
-        };
-
-        updateStorage(state);
-    }
+    popupLogout.style.display = 'flex';
 });
 
-getButton.addEventListener('click', () => {
-    browser.storage.local.get('gresman', ({gresman}) => {
-        console.log(gresman);
-    });
+yesSubmit.addEventListener('click', ()=>{
+    const state = {
+        basic: null,
+        secure: null,
+        tab: null,
+        issues: null,
+        log: null,
+        logtime: null,
+        temp: null,
+        stage: 'INIT',
+        status: 'DONE'
+    };
+
+    popupLogout.style.display = 'none';
+    updateStorage(state);
 });
 
-delButton.addEventListener('click', () => {
-    browser.storage.local.remove('gresman', () => {
-        console.log('Remove gresman');
-    });
-    // updateStorage({issues: null, status: 'BEGIN'});
+cancelSubmit.addEventListener('click', () => {
+    popupLogout.style.display = 'none';
 });
 
-testButton.addEventListener('click', () => {
-    updateStorage({status: 'ISSUES'});
+okSubmit.addEventListener('click', () => {
+    popupLogged.style.display = 'none';
+    updateStorage({status: 'BEGIN'});
 });
 
 browser.storage.local.get('gresman', ({gresman}) => {
     popupState = gresman;
-    console.log(popupState);
     if (!gresman) {
         const state = {
             basic: null,
@@ -263,7 +264,6 @@ browser.storage.local.get('gresman', ({gresman}) => {
 browser.storage.onChanged.addListener((storage) => {
     if (storage.gresman && storage.gresman.newValue) {
         popupState = storage.gresman.newValue;
-        console.log(popupState);
         switch (popupState.stage) {
             case 'INIT':
                 showSection('init');
@@ -312,6 +312,7 @@ browser.storage.onChanged.addListener((storage) => {
             case 'LOGGED':
                 showError(popupState.stage.toLowerCase(), ' ');
                 showInfo(popupState.stage.toLowerCase(), messages.info.logged);
+                popupLogged.style.display = 'flex';
                 break;
             case 'ISSUES':
                 showError(popupState.stage.toLowerCase(), ' ');
