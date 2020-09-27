@@ -31,6 +31,18 @@
       "js": [
         "content/dashboard.js"
       ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "*://jira.bpcbt.com/secure/Tempo.jspa"
+      ],
+      "js": [
+        "content/tempo.js"
+      ],
+      "css": [
+        "content/tempo.css"
+      ]
     }
   ],
   "browser_action": {
@@ -44,6 +56,10 @@
     "storage",
     "webRequest",
     "webRequestBlocking",
-    "*://helpdesk.senlainc.com/*"
+    "*://helpdesk.senlainc.com/*",
+    "*://jira.bpcbt.com/*"
+  ],
+  "web_accessible_resources": [
+    "icons/*.png"
   ]
 }

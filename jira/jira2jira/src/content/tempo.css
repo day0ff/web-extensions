@@ -1,0 +1,52 @@
+:root {
+    --blue: #0e72e2;
+    --blue-light: #53affc;
+    --blue-dark: #0051de;
+    --white: #fff;
+    --black: #000;
+    --black-transparent: rgba(0, 0, 0, 0.6);
+    --error: #ef1218;
+}
+
+.pull-right{
+
+}
+
+.j2j-day-report, .j2j-all-day-report{
+    border-radius: 3px;
+    transition: background-color ease-in-out 1s;
+}
+
+.j2j-day-report:hover, .j2j-all-day-report {
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.j2j-day-report {
+}
+
+.j2j-day-report:hover {
+}
+
+.j2j-all-day-report {
+    color: var(--white);
+    background-color: var(--blue-dark);
+    border-right: solid 1px var(--white);
+}
+
+.j2j-all-day-report:hover {
+    background-color: var(--blue-light);
+}
+
+.j2j-button{
+    padding: 7px 10px;
+    color: var(--white);
+    background-color: var(--blue-light);
+    border-radius: 3px;
+    border: none;
+}
+
+.j2j-button:hover{
+    cursor: pointer;
+    background-color: var(--blue);
+}

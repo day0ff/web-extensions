@@ -111,8 +111,8 @@ select {
 
 .logout {
     position: absolute;
-    top: -38px;
-    right: -7px;
+    top: 54px;
+    right: 0;
     font-weight: normal;
     font-size: 14px;
     line-height: 16px;

@@ -138,3 +138,18 @@ browser.storage.onChanged.addListener((storage) => {
         }
     }
 });
+
+browser.runtime.onMessage.addListener(
+    (request, sender, sendResponse) => {
+        if (request.tempo && request.tempo.message) {
+            if(request.tempo.message === 'report'){
+
+            }
+            if(request.tempo.tempo === 'reports'){
+
+            }
+            console.log(request.tempo.message);
+        }
+        sendResponse({background: {response: 'Response from Background!'}});
+    }
+);
