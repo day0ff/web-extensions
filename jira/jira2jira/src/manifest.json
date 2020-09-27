@@ -1,0 +1,49 @@
+{
+  "manifest_version": 2,
+  "name": "Jira2Jira.",
+  "description": "Helps easily log time from one Jira to another Jira.",
+  "author": "Vershadov Denis",
+  "version": "0.1.0",
+  "icons": {
+    "48": "icons/icon-48-active.png"
+  },
+  "background": {
+    "scripts": [
+      "background/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "*://helpdesk.senlainc.com/login.jsp"
+      ],
+      "js": [
+        "content/secure.js"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "*://helpdesk.senlainc.com/secure/Dashboard.jspa"
+      ],
+      "js": [
+        "content/dashboard.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon-48-active.png",
+    "default_title": "Jira2Jira",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "*://helpdesk.senlainc.com/*"
+  ]
+}

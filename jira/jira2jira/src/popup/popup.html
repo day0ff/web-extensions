@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><span class="blue-light">Jira</span><span class="blue">2</span><span class="blue-dark">Jira</span></title>
+    <link rel="stylesheet" type="text/css" href="popup.css">
+    <script type="module" src="popup.js"></script>
+</head>
+<body>
+<h1><span class="blue-light">Jira</span><span class="blue">2</span><span class="blue-dark">Jira</span></h1>
+<section id="menu">
+    <input name="basic" type="button" value="Basic"/>
+    <input name="secure" type="button" value="Secure"/>
+    <input name="issues" type="button" value="Issues"/>
+    <input name="logtime" type="button" value="Log Time"/>
+    <input name="storage" type="button" value="Storage"/>
+</section>
+<section id="init" class="tab">
+    <p><b>Jira2Jira</b> extension<br/>helps to log work time<br/>from one Jira to another.</p>
+    <p>Please, go through two simple stages of authorization to be able to use it.</p>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="start">Start</a>
+    </div>
+</section>
+<section id="basic" class="tab">
+    <h3><b>Step 1</b></h3>
+    <p>Enter Basic Auth credentials.</p>
+    <form name="basic">
+        <input name="login" type="text" placeholder="login"/>
+        <input name="password" type="password" placeholder="password"/>
+    </form>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="submit">Submit</a>
+    </div>
+</section>
+<section id="step1" class="tab">
+    <h3><b>Step 1</b></h3>
+    <p class="confirmed">Basic Auth credentials confirmed.</p>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="next">Next</a>
+    </div>
+</section>
+<section id="secure" class="tab">
+    <h3><b>Step 2</b></h3>
+    <p>Enter Jira login credentials.</p>
+    <form name="secure">
+        <input name="login" type="text" placeholder="login"/>
+        <input name="password" type="password" placeholder="password"/>
+    </form>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="submit">Submit</a>
+    </div>
+</section>
+<section id="step2" class="tab">
+    <h3><b>Step 2</b></h3>
+    <p class="confirmed">Jira login credentials confirmed.</p>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="next">Next</a>
+    </div>
+</section>
+<section id="logtime" class="tab">
+    <h3>Log Time</h3>
+    <form name="logtime">
+        <div>
+            <select id="issue" name="issues">
+                <option>Empty</option>
+            </select>
+            <a href="#" name="refresh" class="refresh">⟲</a>
+        </div>
+        <textarea rows="3" name="comment" placeholder="Description*"></textarea>
+        <input type="date" name="date">
+        <input type="number" name="worked" placeholder="work time">
+        <input type="number" name="billable" placeholder="billable time">
+    </form>
+    <div class="notification">
+        <p class="error"></p>
+        <p class="info"></p>
+    </div>
+    <div class="bottom">
+        <a href="#" name="log">Log Time</a>
+    </div>
+    <div class="links">
+        <a href="#" name="login">Login</a>
+        <a href="#" name="tempo">Tempo</a>
+        <a href="#" name="search">Issues</a>
+        <a href="#" name="dashboard">Dashboard</a>
+    </div>
+    <a href="#" name="logout" class="logout">logout</a>
+</section>
+<div class="popup popup-logout">
+    <div class="popup-container">
+        <h2 class="popup-message">Logout from extension?</h2>
+        <div class="popup-buttons"><a href="#" name="yes">Yes</a><a href="#" name="cancel">Cancel</a></div>
+    </div>
+</div>
+<div class="popup popup-logged">
+    <div class="popup-container">
+        <h2 class="popup-message">Time Logged.</h2>
+        <div class="popup-buttons"><a href="#" name="ok">Ok</a></div>
+    </div>
+</div>
+</body>
+</html>
