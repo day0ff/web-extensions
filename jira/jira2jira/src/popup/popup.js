@@ -204,6 +204,7 @@ okSubmit.addEventListener('click', () => {
 
 browser.storage.local.get('gresman', ({gresman}) => {
     popupState = gresman;
+    console.log(popupState);
     if (!gresman) {
         const state = {
             basic: null,
@@ -212,6 +213,7 @@ browser.storage.local.get('gresman', ({gresman}) => {
             issues: null,
             log: null,
             logtime: null,
+            options: {issue:{id: "13240", name: "GRESMAN-404"}},
             temp: null,
             stage: 'INIT',
             status: 'DONE'
@@ -330,7 +332,7 @@ function setLogTime(data) {
 
     if (issues && issues.length) {
         issueSelect.innerHTML = issues.map(issue =>
-            `<option value="${issue.id}" ${(logtime && logtime.issue === issue.id || popupState.temp && popupState.temp.logtime && popupState.temp.logtime.issue === issue.id ) && 'selected'}>${issue.name}</option>`
+            `<option value="${issue.id}" ${(logtime && logtime.issue === issue.id || popupState.options && popupState.options.issue && popupState.options.issue.id === issue.id ) && 'selected'}>${issue.name}</option>`
         ).join('');
     }
 
