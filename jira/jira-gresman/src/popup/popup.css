@@ -137,6 +137,7 @@ select {
 }
 
 .popup-message{
+    margin: 0;
     font-weight: 400;
 }
 
@@ -144,4 +145,19 @@ select {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+}
+
+.popup-help .popup-container{
+    width: 270px;
+    height: 220px;
+}
+
+.popup-help p{
+    max-width: 220px;
+}
+
+.popup-help b{
+    display: inline-block;
+    width: 40px;
+    margin-right: 5px;
 }
