@@ -43,8 +43,10 @@ function initForm(container) {
     const dayCells = [...tempoReportContainer.querySelectorAll('div.day-cell-has-content.depth-1[name^="cell_"]')];
 
     dayCells.forEach(cell => {
-        cell.querySelector('.public_fixedDataTableCell_cellContent').textContent = 'Report ' + cell.textContent.trim();
-        cell.classList.add('j2j-day-report');
+        const elem = cell.querySelector('.public_fixedDataTableCell_cellContent');
+
+        elem.textContent = 'j2j Report ' + cell.textContent.trim();
+        elem.classList.add('j2j-day-report');
     });
 
     footerCells.forEach(cell => {
@@ -55,7 +57,7 @@ function initForm(container) {
             cell.classList.add('j2j-all-day-report');
 
             const cellListener = () => {
-                cell.classList.add('j2j-button-done');
+                cell.classList.add('j2j-button-progress');
                 cell.removeEventListener('click', cellListener);
                 reportAllDay(date, tempoReportContainer, cell);
             };
@@ -71,7 +73,7 @@ function reportAllDay(date, container, cell) {
     const reports = issues.map(issue => {
         const name = issue.getAttribute('name').replace('cell_', '').replace(`_${date}`, '');
         const link = container.querySelector(`a[title="${name}"]`).href;
-        const time = issue.textContent.replace('Report ', '');
+        const time = issue.textContent.replace('j2j Report ', '');
 
         return ({name, link, date, time});
     });
