@@ -3,7 +3,7 @@
   "name": "Jira2Jira.",
   "description": "Helps easily log time from one Jira to another Jira.",
   "author": "Vershadov Denis",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "icons": {
     "48": "icons/icon-48-active.png"
   },
