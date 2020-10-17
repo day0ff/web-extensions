@@ -2,6 +2,7 @@
     --blue: #0e72e2;
     --blue-light: #53affc;
     --blue-dark: #0051de;
+    --blue-black: #003064;
     --white: #fff;
     --black: #000;
     --black-transparent: rgba(0, 0, 0, 0.6);
@@ -9,11 +10,19 @@
     --grey-light: #808080;
     --grey-dark: #BBBBBB;
     --green: green;
+    --green-light: #63c60f;
+    --green-dark: #003b00;
     --error: #ef1218;
 }
 
 body {
     position: relative;
+}
+
+.j2j-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .j2j-popup-container {
@@ -59,7 +68,7 @@ body {
     background-color: var(--grey-light);
 }
 
-.j2j-day-report, .j2j-all-day-report {
+.j2j-button, .j2j-day-report, .j2j-all-day-report {
     border-radius: 3px;
     transition: background-color ease-in-out 0.6s;
 }
@@ -77,31 +86,37 @@ body {
 
 .j2j-all-day-report {
     color: var(--white);
-    background-color: var(--blue-dark);
-    border-right: solid 1px var(--white);
+    background-color: var(--blue);
+    border: solid 2px  var(--blue-light);
+    border-bottom-color: var(--blue-black);
+    border-right-color: var(--blue-black);
 }
 
 .j2j-all-day-report:hover {
-    background-color: var(--blue-light);
+    background-color: var(--blue-dark);
 }
 
 .j2j-button {
     padding: 6px 10px;
     color: var(--white);
-    background-color: var(--blue-light);
-    border-radius: 3px;
-    border: none;
+    background-color: var(--blue);
+    border: solid 2px  var(--blue-light);
+    border-bottom-color: var(--blue-black);
+    border-right-color: var(--blue-black);
     margin-right: 10px;
     transition: background-color ease-in-out 0.6s;
 }
 
 .j2j-button:hover {
     cursor: pointer;
-    background-color: var(--blue);
+    background-color: var(--blue-dark);
 }
 
 .j2j-button-done {
     background-color: var(--green);
+    border: solid 2px  var(--green-dark);
+    border-bottom-color: var(--green-light);
+    border-right-color: var(--green-light);
 }
 
 .j2j-button-done:hover {

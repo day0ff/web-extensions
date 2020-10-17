@@ -51,7 +51,7 @@ function initForm(container) {
         if (cell.textContent.trim() !== '0') {
             const date = cell.getAttribute('name').replace('footerCell_', '');
 
-            cell.textContent = 'Report ' + cell.textContent.trim();
+            cell.textContent = 'j2j Report ' + cell.textContent.trim();
             cell.classList.add('j2j-all-day-report');
 
             const cellListener = () => {
@@ -76,12 +76,13 @@ function reportAllDay(date, container, cell) {
         return ({name, link, date, time});
     });
 
-    reports.forEach(({name, link, date, time}) => console.log(name, time, date, link));
+    // reports.forEach(({name, link, date, time}) => console.log(name, time, date, link));
     browser.runtime.sendMessage({tempo: {message: 'reports', reports}}, (response) => {
         if (response && response.background){
             tempoState.popup.container.style.display = 'flex';
         }
     });
+
 }
 
 function initDialog(dialog) {
@@ -95,7 +96,7 @@ function initDialog(dialog) {
     const time = getBillableWorkTime(timeString);
     const closeButton = [...toolbar.querySelectorAll('button')].filter(button => button.textContent.trim() === 'Close').pop();
 
-    button.textContent = 'Report';
+    button.textContent = 'j2j Report';
     button.classList.add('j2j-button');
     toolbar.prepend(button);
     button.addEventListener('click', () => {
