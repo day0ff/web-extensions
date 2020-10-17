@@ -43,13 +43,14 @@ const logRequest = ({basic, secure, logtime}) => {
         method: 'POST',
         body: JSON.stringify({
             attributes: {
-                _Billable_: {
-                    name: 'Billable',
-                    workAttributeId: 6,
-                    value: logtime.billable
-                }
+                // temporal remove until billable is not returned
+                // _Billable_: {
+                //     name: 'Billable',
+                //     workAttributeId: 6,
+                //     value: logtime.billable
+                // }
             },
-            billableSeconds: '',
+            billableSeconds: logtime.billable * 3600,
             comment: logtime.comment,
             endDate: null,
             includeNonWorkingDays: false,
