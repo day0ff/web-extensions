@@ -70,12 +70,13 @@
 <section id="step2" class="tab">
     <p><b>Step 2</b></p>
     <p class="confirmed">Jira login credentials confirmed.</p>
+    <p class="confirmed">Now you can easily log your time.</p>
     <div class="notification">
         <p class="error"></p>
         <p class="info"></p>
     </div>
     <div class="bottom">
-        <a href="#" name="next">Next</a>
+        <a href="#" name="next">Finish</a>
     </div>
 </section>
 <section id="logtime" class="tab">
@@ -89,8 +90,8 @@
         </div>
         <textarea rows="3" name="comment" placeholder="Description*"></textarea>
         <input type="date" name="date">
-        <input type="number" name="worked" placeholder="work time">
-        <input type="number" name="billable" placeholder="billable time">
+        <input type="number" name="worked" placeholder="Worked">
+        <input type="number" name="billable" placeholder="Billable">
     </form>
     <div class="notification">
         <p class="error"></p>
@@ -104,6 +105,7 @@
         <a href="#" name="tempo">Tempo</a>
         <a href="#" name="search">Issues</a>
         <a href="#" name="dashboard">Dashboard</a>
+        <a href="#" name="help">Help</a>
     </div>
     <a href="#" name="logout" class="logout">logout</a>
 </section>
@@ -116,6 +118,18 @@
 <div class="popup popup-logged">
     <div class="popup-container">
         <h2 class="popup-message">Time Logged.</h2>
+        <div class="popup-buttons"><a href="#" name="ok">Ok</a></div>
+    </div>
+</div>
+<div class="popup popup-help">
+    <div class="popup-container">
+        <h2 class="popup-message">Jira Gresman v0.4.0</h2>
+        <p>
+            If you have any questions, please contact me by<br/>
+            <b>email:</b>dzianis_viarshadau@senla.eu<br/>
+            <b>skype:</b>day0ff<br/>
+            <b>author:</b>Denis Vershadov<br/>
+        </p>
         <div class="popup-buttons"><a href="#" name="ok">Ok</a></div>
     </div>
 </div>

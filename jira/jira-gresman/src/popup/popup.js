@@ -43,6 +43,8 @@ const step2Next = step2Section.querySelector('a[name="next"]');
 const logtimeSection = document.querySelector('#logtime');
 const logtimeForm = document.forms.logtime;
 const issueSelect = logtimeForm.issues;
+const workedInput = logtimeForm.worked;
+const billableInput = logtimeForm.billable;
 const refreshSubmit = logtimeSection.querySelector('a[name="refresh"]');
 const logSubmit = logtimeSection.querySelector('a[name="log"]');
 const loginSubmit = logtimeSection.querySelector('a[name="login"]');
@@ -50,6 +52,7 @@ const tempoSubmit = logtimeSection.querySelector('a[name="tempo"]');
 const dashboardSubmit = logtimeSection.querySelector('a[name="dashboard"]');
 const searchSubmit = logtimeSection.querySelector('a[name="search"]');
 const logoutSubmit = logtimeSection.querySelector('a[name="logout"]');
+const helpSubmit = logtimeSection.querySelector('a[name="help"]');
 
 const popupLogout = document.querySelector('.popup-logout');
 const yesSubmit = popupLogout.querySelector('a[name="yes"]');
@@ -57,6 +60,9 @@ const cancelSubmit = popupLogout.querySelector('a[name="cancel"]');
 
 const popupLogged = document.querySelector('.popup-logged');
 const okSubmit = popupLogged.querySelector('a[name="ok"]');
+
+const popupHelp = document.querySelector('.popup-help');
+const okHelpSubmit = popupHelp.querySelector('a[name="ok"]');
 
 menu.addEventListener('click', ({target: {name}}) => {
     showSection(name);
@@ -136,6 +142,10 @@ logtimeForm.addEventListener('change', ()=>{
     updateStorage({temp});
 });
 
+workedInput.addEventListener('input', ()=>{
+    billableInput.value = workedInput.value;
+});
+
 refreshSubmit.addEventListener('click', () => {
     updateStorage({status: 'REFRESH'});
 });
@@ -176,6 +186,10 @@ logoutSubmit.addEventListener('click', () => {
     popupLogout.style.display = 'flex';
 });
 
+helpSubmit.addEventListener('click', () => {
+    popupHelp.style.display = 'flex';
+});
+
 yesSubmit.addEventListener('click', ()=>{
     const state = {
         basic: null,
@@ -202,8 +216,13 @@ okSubmit.addEventListener('click', () => {
     updateStorage({status: 'BEGIN'});
 });
 
+okHelpSubmit.addEventListener('click', () => {
+    popupHelp.style.display = 'none';
+});
+
 browser.storage.local.get('gresman', ({gresman}) => {
     popupState = gresman;
+    console.log(popupState);
     if (!gresman) {
         const state = {
             basic: null,
