@@ -1,6 +1,6 @@
 {
   "name": "jira-gresman",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "description": "Jira logging time helper extension.",
   "main": "index.js",
   "scripts": {

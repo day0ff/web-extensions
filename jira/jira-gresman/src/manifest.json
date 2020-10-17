@@ -3,7 +3,7 @@
   "name": "Jira Gresman.",
   "description": "It helps to logg time in jira.",
   "author": "Vershadov Denis",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "icons": {
     "48": "icons/icon-48-active.png"
   },
