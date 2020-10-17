@@ -38,7 +38,7 @@ browser.webRequest.onAuthRequired.addListener((details, callback) => {
         if (basic && basic.login && basic.password) {
             callback({authCredentials: {username: basic.login, password: basic.password}});
         } else {
-            callback({cancel: true});
+            callback();
         }
     },
     {urls: ['*://helpdesk.senlainc.com/*']},
