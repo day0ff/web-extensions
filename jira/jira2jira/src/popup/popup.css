@@ -4,7 +4,7 @@
     --blue-dark: #0051de;
     --white: #fff;
     --black: #000;
-    --black-transparent:rgba(0, 0, 0, 0.6);
+    --black-transparent: rgba(0, 0, 0, 0.6);
     --error: #ef1218;
 }
 
@@ -119,7 +119,7 @@ select {
     color: var(--white);
 }
 
-.popup{
+.popup {
     position: absolute;
     display: none;
     justify-content: center;
@@ -131,7 +131,7 @@ select {
     background-color: var(--black-transparent);
 }
 
-.popup-container{
+.popup-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -141,22 +141,40 @@ select {
     background-color: var(--white);
 }
 
-.popup-message{
+.popup-message {
+    margin: 0;
     font-weight: 400;
 }
 
-.popup-buttons{
+.popup-buttons {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
 }
 
-.blue{
+.blue {
     color: var(--blue);
 }
-.blue-light{
+
+.blue-light {
     color: var(--blue-light);
 }
-.blue-dark{
+
+.blue-dark {
     color: var(--blue-dark);
+}
+
+.popup-help .popup-container {
+    width: 270px;
+    height: 200px;
+}
+
+.popup-help p {
+    max-width: 220px;
+}
+
+.popup-help b {
+    display: inline-block;
+    width: 40px;
+    margin-right: 5px;
 }
